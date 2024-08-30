@@ -1,0 +1,32 @@
+server:
+  port: 8096
+
+spring:
+  application:
+    name: accounts-movements
+  datasource:
+    url: "jdbc:postgresql://postgres:5432/bank"
+    driverClassName: "org.postgresql.Driver"
+    type: "com.zaxxer.hikari.HikariDataSource"
+    username: "alvaro"
+    password: "secret"
+    hikari:
+      connection-timeout: 20000 #maximum number of milliseconds that a client will wait for a connection
+      maximum-idle: 4 # Maximum number of idle connections mantained by Hikari
+      minimum-idle: 1 #minimum number of idle connections maintained by HikariCP in a connection pool
+      maximum-pool-size: 5 #maximum pool size
+      idle-timeout: 10000 #maximum idle time for connection
+      max-lifetime: 180000 # maximum lifetime in milliseconds of a connection in the pool after it is closed.
+    jpa:
+      database-platform: "org.hibernate.dialect.PostgreSQLDialect"
+      show-sql: false
+      properties:
+        hibernate:
+          #generate_statistics: true
+          query:
+            plan_cache_max_size: 2048
+            plan_parameter_metadata_max_size: 256
+          order_inserts: true
+          jdbc:
+            batch_size: 10
+          format_sql: true

@@ -1,0 +1,37 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres_container
+    restart: always
+    shm_size: 128mb
+    environment:
+      POSTGRES_USER: alvaro
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: bank
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  client-person-ms:
+    image: ziguiblack/client-person-ms:latest
+    container_name: client-person-ms-container
+    restart: always
+    ports:
+      - "8098:8098"    
+    depends_on:
+      - postgres
+  
+  accounts-movement-ms:
+    image: ziguiblack/accounts-movement-ms:latest
+    container_name: accounts-movement-ms-container
+    restart: always
+    ports:
+      - "8096:8096"    
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:
